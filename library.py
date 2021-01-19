@@ -110,175 +110,177 @@ class Library():
 
 
 
-############## ACTUAL CODE ##############
+if __name__ == "__main__":
 
-while True:
-    
-    # Geeting Right username and password from the file.
-    correct_uname = ""
-    correct_pass = ""
+    ############## ACTUAL CODE ##############
 
-    with open("password.txt", "r") as a:
-        #Removing new line character at the end
-        correct_uname = a.readline().replace('\n', '')
-        correct_pass = a.readline().replace('\n', '')
-
-
-    ## Console For Log-in by the user...    
-    print("#"*10, " Login To Librclearary Dashboard ", "#"*10)
-    username = input("Username: ")
-    password = input("Password: ")
-
-    # Checking If The password was correct..
-    # IF CORRECT:-
-    if str(username) == str(correct_uname) and str(password) == str(correct_pass):
-        # Create a object for operations
-        name = Library()
-    
-    #IF INCORRECT:-
-    else:
-        print("Wrong Username or Password!!")
-        # Start the loop again
-        continue
-
-    ###After log-in Console:-
     while True:
 
-        # Taking command form the user
-        command = input("($): ")
+        # Geeting Right username and password from the file.
+        correct_uname = ""
+        correct_pass = ""
 
-        if command == "logout":
-            break
+        with open("password.txt", "r") as a:
+            #Removing new line character at the end
+            correct_uname = a.readline().replace('\n', '')
+            correct_pass = a.readline().replace('\n', '')
 
-        elif command == "quit":
-            exit()
 
-        elif command.lower() == "help":
-            print("""\n
-            Note: $$give_value$$ ---> don't include $$ with the given value
-            $) check name $$name$$ : print how many books taken by $name$,
-            $) add $$bookName$$ : Adds book to library,
-            $) remove $$Bookname$$ : Removes the book from library,
-            $) change $$oldName$$ to $$newName$$ : Changes Oldname to NewName Every where,
-            $) give $$bookname$$ to $$studentName$$ : Give Book to students for Borrowing,
-            $) taken $$bookname$$ from $$studentName$$ : Take book from students,
-            $) show available : Shows Available books in the Library,
-            $) show borrowers : print all the borrowers with book name.
-            $) quit : Quit The Application.
-            $) logout: Log out From the Current Account.
-            $) ? : Displays the name of the Student Currently Working on\n""")
+        ## Console For Log-in by the user...    
+        print("#"*10, " Login To Librclearary Dashboard ", "#"*10)
+        username = input("Username: ")
+        password = input("Password: ")
 
-        try:
-            if "change " in command:
-                # Fetching oldname and NewName from the command
-                cmd = command.split(' ')
-                cmd.remove("change")
-                index = cmd.index("to")
+        # Checking If The password was correct..
+        # IF CORRECT:-
+        if str(username) == str(correct_uname) and str(password) == str(correct_pass):
+            # Create a object for operations
+            name = Library()
 
-                oldname = cmd[0:index]
-                oldname = " ".join(oldname)
+        #IF INCORRECT:-
+        else:
+            print("Wrong Username or Password!!")
+            # Start the loop again
+            continue
 
-                newName = cmd[index+1:]
-                newName = " ".join(newName)
-                name.changeName(oldname, newName)
+        ###After log-in Console:-
+        while True:
 
-            elif "add " in command:
-                cmd = command.split(" ")
-                cmd.remove("add")
-                bookname = cmd[0:]
-                Library.availableBooks.append(" ".join(bookname))
-                print(f'Book: \"{" ".join(bookname)}\" is Added to the library!!')
+            # Taking command form the user
+            command = input("($): ")
 
-            elif "remove " in command:
-                cmd = command.split(" ")
-                cmd.remove("remove")
-                bookname = cmd[0:]
-                Library.availableBooks.remove(" ".join(bookname))
-                print(f'Book: \"{" ".join(bookname)}\" is removed from the library!!')
+            if command == "logout":
+                break
 
-            elif "check name" in command:
-                # Fetching $Name$ from the command
-                cmd = command.split(" ")
-                cmd.remove("check")
-                cmd.remove("name")
-                checking_name = cmd[0:]
-                checking_name = " ".join(cmd)
-                
-                # Getting all borrowers
-                list1 = name.browers()
-                # If got any entry with name given
-                got_some = False
-                
-                
-                for i in list1:
-                    if checking_name in i:
-                        # If the name is present returning it..
+            elif command == "quit":
+                exit()
+
+            elif command.lower() == "help":
+                print("""\n
+                Note: $$give_value$$ ---> don't include $$ with the given value
+                $) check name $$name$$ : print how many books taken by $name$,
+                $) add $$bookName$$ : Adds book to library,
+                $) remove $$Bookname$$ : Removes the book from library,
+                $) change $$oldName$$ to $$newName$$ : Changes Oldname to NewName Every where,
+                $) give $$bookname$$ to $$studentName$$ : Give Book to students for Borrowing,
+                $) taken $$bookname$$ from $$studentName$$ : Take book from students,
+                $) show available : Shows Available books in the Library,
+                $) show borrowers : print all the borrowers with book name.
+                $) quit : Quit The Application.
+                $) logout: Log out From the Current Account.
+                $) ? : Displays the name of the Student Currently Working on\n""")
+
+            try:
+                if "change " in command:
+                    # Fetching oldname and NewName from the command
+                    cmd = command.split(' ')
+                    cmd.remove("change")
+                    index = cmd.index("to")
+
+                    oldname = cmd[0:index]
+                    oldname = " ".join(oldname)
+
+                    newName = cmd[index+1:]
+                    newName = " ".join(newName)
+                    name.changeName(oldname, newName)
+
+                elif "add " in command:
+                    cmd = command.split(" ")
+                    cmd.remove("add")
+                    bookname = cmd[0:]
+                    Library.availableBooks.append(" ".join(bookname))
+                    print(f'Book: \"{" ".join(bookname)}\" is Added to the library!!')
+
+                elif "remove " in command:
+                    cmd = command.split(" ")
+                    cmd.remove("remove")
+                    bookname = cmd[0:]
+                    Library.availableBooks.remove(" ".join(bookname))
+                    print(f'Book: \"{" ".join(bookname)}\" is removed from the library!!')
+
+                elif "check name" in command:
+                    # Fetching $Name$ from the command
+                    cmd = command.split(" ")
+                    cmd.remove("check")
+                    cmd.remove("name")
+                    checking_name = cmd[0:]
+                    checking_name = " ".join(cmd)
+
+                    # Getting all borrowers
+                    list1 = name.browers()
+                    # If got any entry with name given
+                    got_some = False
+
+
+                    for i in list1:
+                        if checking_name in i:
+                            # If the name is present returning it..
+                            print(i)
+                            got_some = True
+                        else:
+                            got_some = False
+
+                    # If there is no entry present with the name
+                    if got_some == False:
+                        print(f"{checking_name} Didn't borrowed any Book!!")
+
+
+                elif "give " in command:
+                    # Fetching $name$ and $bookname$ from the command
+                    cmd = command.split(' ')
+                    cmd.remove("give")
+                    index = cmd.index("to")
+                    bookname = cmd[0:index]
+                    bookname = " ".join(bookname)
+
+                    studentName = cmd[index+1:]
+                    studentName = " ".join(studentName)
+
+                    # Sending the data to Library Function
+                    name.take_book(studentName, bookname)
+
+                # taken $bookname$ from $studentName$
+                elif "taken " in command:
+                    # Fetching $name$ and $bookname$ from the command
+                    cmd = command.split(" ")
+                    cmd.remove("taken")
+                    index = cmd.index("from")
+                    bookname = cmd[0:index]
+                    bookname = " ".join(bookname)
+
+                    studentName = cmd[index+1:]
+                    studentName = " ".join(studentName)
+                    # Sending the data to Library Function
+                    name.return_book(studentName, bookname)
+
+                elif "show available" == command:
+                    #Printing a Design with all the books present in the availableBooks list in Library class
+                    print("-"*10)
+                    for i in Library.availableBooks:
                         print(i)
-                        got_some = True
-                    else:
-                        got_some = False
+                    print("-"*10)
 
-                # If there is no entry present with the name
-                if got_some == False:
-                    print(f"{checking_name} Didn't borrowed any Book!!")
+                # show borrowers
+                elif "show borrowers" == command:
+                    #Printing a Design with Name of borrowers and books they taken
+                    b_name = name.browers()
+                    print("*"*10)
+                    for i in b_name:
+                        print(i)
+                    print("*"*10)
 
-            
-            elif "give " in command:
-                # Fetching $name$ and $bookname$ from the command
-                cmd = command.split(' ')
-                cmd.remove("give")
-                index = cmd.index("to")
-                bookname = cmd[0:index]
-                bookname = " ".join(bookname)
+                elif "?" == command:
+                    # Giving the username with which they logged in
+                    print(f"Logged In as: {username}")
 
-                studentName = cmd[index+1:]
-                studentName = " ".join(studentName)
+                elif "" == command:
+                    # If user types enter key from some space
+                    pass
 
-                # Sending the data to Library Function
-                name.take_book(studentName, bookname)
+                else:
+                    # If user typed a not known command
+                    print(f"Invalid Command: {command}")
 
-            # taken $bookname$ from $studentName$
-            elif "taken " in command:
-                # Fetching $name$ and $bookname$ from the command
-                cmd = command.split(" ")
-                cmd.remove("taken")
-                index = cmd.index("from")
-                bookname = cmd[0:index]
-                bookname = " ".join(bookname)
-
-                studentName = cmd[index+1:]
-                studentName = " ".join(studentName)
-                # Sending the data to Library Function
-                name.return_book(studentName, bookname)
-
-            elif "show available" == command:
-                #Printing a Design with all the books present in the availableBooks list in Library class
-                print("-"*10)
-                for i in Library.availableBooks:
-                    print(i)
-                print("-"*10)
-
-            # show borrowers
-            elif "show borrowers" == command:
-                #Printing a Design with Name of borrowers and books they taken
-                b_name = name.browers()
-                print("*"*10)
-                for i in b_name:
-                    print(i)
-                print("*"*10)
-
-            elif "?" == command:
-                # Giving the username with which they logged in
-                print(f"Logged In as: {username}")
-
-            elif "" == command:
-                # If user types enter key from some space
-                pass
-
-            else:
-                # If user typed a not known command
-                print(f"Invalid Command: {command}")
-
-        except:
-            # If user typed something which is unexpected!!
-            print(f"Check Your Command!!")
+            except:
+                # If user typed something which is unexpected!!
+                print(f"Check Your Command!!")
